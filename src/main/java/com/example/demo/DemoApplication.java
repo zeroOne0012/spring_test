@@ -17,7 +17,7 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 
 		// MySQL 연결 URL, 사용자명, 비밀번호 설정
-        String url = "jdbc:postgres://localhost:5432/temp"; // 데이터베이스 URL (mydb는 예시 데이터베이스)
+        String url = "jdbc:postgresql://localhost:5432/temp"; // 데이터베이스 URL (mydb는 예시 데이터베이스)
         String user = "postgres";  // MySQL 사용자명
         String password = "1234";  // MySQL 비밀번호
 
@@ -31,7 +31,7 @@ public class DemoApplication {
 
         try {
             // JDBC 드라이버 로드
-            Class.forName("com.postgres.cj.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
 
             // 데이터베이스 연결
             conn = DriverManager.getConnection(url, user, password);
@@ -42,7 +42,11 @@ public class DemoApplication {
 
             // 결과 처리
             while (rs.next()) {
+				int id = rs.getInt("id");
+                String msg = rs.getString("msg");
+
                 System.out.println("TEST   " + rs.toString());
+                System.out.println("TEST___(" + id +", " + msg + ")");
             }
 
         } catch (ClassNotFoundException | SQLException e) {
